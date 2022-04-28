@@ -18,6 +18,7 @@ public class Article {
     private String libelle;
     private int prix;
     private int qtSeuil;
-    private int categorie;
     private LocalDate dateCreation;
+    @OneToOne
+    private Categorie categorie;
 }
