@@ -18,8 +18,10 @@ public class Vente {
     private int id;
     @OneToOne
     private Article article;
+    @Column(nullable = false)
     private int qtVendue;
     @OneToOne
     private Client client;
+    @Column(nullable = false)
     private LocalDate dateDeVente;
 }
