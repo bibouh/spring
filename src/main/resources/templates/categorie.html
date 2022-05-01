@@ -3,13 +3,12 @@
 <head>
 
     <meta charset="utf-8" />
-    <title>Gestion Article</title>
+    <title>Gestion client</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta content="Premium Multipurpose Admin & Dashboard Template" name="description" />
     <meta content="Themesbrand" name="author" />
     <!-- App favicon -->
     <link rel="shortcut icon" href="assets/images/favicon.ico">
-    <link href="assets/libs/select2/css/select2.min.css" rel="stylesheet" type="text/css" />
 
     <!-- Bootstrap Css -->
     <link href="assets/css/bootstrap.min.css" id="bootstrap-style" rel="stylesheet" type="text/css" />
@@ -62,6 +61,9 @@
                 <button type="button" class="btn btn-sm px-3 font-size-16 header-item waves-effect" id="vertical-menu-btn">
                     <i class="fa fa-fw fa-bars"></i>
                 </button>
+
+
+
             </div>
 
             <div class="d-flex">
@@ -113,7 +115,7 @@
                     </li>
                     <li>
                         <a href="/client" class="waves-effect">
-                            <i class="bx bxs-group "></i>
+                            <i class="bx bx-person"></i>
                             <span key="t-chat">Client</span>
                         </a>
                     </li>
@@ -125,16 +127,18 @@
                     </li>
                     <li>
                         <a href="/categorie" class="waves-effect">
-                            <i class="bx bxs-purchase-tag-alt "></i>
+                            <i class="bx bx-person"></i>
                             <span key="t-chat">Categorie</span>
                         </a>
                     </li>
                     <li>
                         <a href="/article" class="waves-effect">
-                            <i class="bx bxs-package"></i>
+                            <i class="bx bx-user"></i>
                             <span key="t-chat">Articles</span>
                         </a>
                     </li>
+
+
                 </ul>
             </div>
             <!-- Sidebar -->
@@ -143,6 +147,10 @@
     <!-- Left Sidebar End -->
 
 
+
+    <!-- ============================================================== -->
+    <!-- Start right Content here -->
+    <!-- ============================================================== -->
     <div class="main-content">
 
         <div class="page-content">
@@ -171,38 +179,14 @@
                         <div class="card">
                             <div class="card-body">
 
-                                <h4 class="card-title">Enregister un article</h4>
-                                <form  th:object="${article}" th:action="@{/saveArticle}" method="POST" >
+                                <h4 class="card-title">Enregister une categorie </h4>
+                                <form  th:object="${categorie}" th:action="@{/saveCategorie}" method="POST" >
                                     <div class="mb-3 row">
-                                        <label for="example-text-input" class="col-md-2 col-form-label">Libelle</label>
+                                        <label for="example-text-input" class="col-md-2 col-form-label">Designation</label>
                                         <div class="col-md-10">
-                                            <input th:field="*{libelle}" class="form-control" type="text" id="example-text-input">
+                                            <input th:field="*{designation}" class="form-control" type="text" id="example-text-input">
                                         </div>
                                     </div>
-                                    <div class="mb-3 row">
-                                        <label  class="col-md-2 col-form-label">Prix</label>
-                                        <div class="col-md-10">
-                                            <input th:field="*{prix}" class="form-control" type="number" >
-                                        </div>
-                                    </div>
-
-                                    <div class="mb-3 row">
-                                        <label  class="col-md-2 col-form-label">Quantite seuil</label>
-                                        <div class="col-md-10">
-                                            <input th:field="*{qtSeuil}" class="form-control" type="number" >
-                                        </div>
-                                    </div>
-
-
-                                    <div class="mb-3 row">
-                                        <label  class="col-md-2 col-form-label">Categorie</label>
-                                        <div class="col-md-10">
-                                            <select class="form-control select2" th:field="*{categorie}" >
-                                                <option th:each="listeCategorie : ${listeCategorie}" th:value="${listeCategorie.id}" th:text="${listeCategorie.	designation }"> selectionner une categorie</option>
-                                            </select>
-                                        </div>
-                                    </div>
-
                                     <button class="btn btn-lg btn-success" type="submit">Enregistrer</button>
 
                                 </form>
@@ -219,27 +203,20 @@
                     <div class="col-lg-12">
                         <div class="card">
                             <div class="card-body">
-                                <h4 class="card-title mb-4">Liste des articles</h4>
+                                <h4 class="card-title mb-4">Liste des categories</h4>
                                 <table id="datatable-buttons" class="table table-bordered dt-responsive nowrap w-100">
                                     <thead>
                                     <tr>
                                         <th>Id</th>
-                                        <th>Libelle</th>
-                                        <th>Prix</th>
-                                        <th>Quantite seuil</th>
-                                        <th>Date de creation</th>
-                                        <th>Categorie</th>
-                                        <th>Action</th>
+                                        <th>Designation</th>
+
                                     </tr>
                                     </thead>
                                     <tbody>
-                                    <tr th:each="listeArticle : ${listeArticle}">
-                                        <td th:utext="${listeArticle.id}"></td>
-                                        <td th:utext="${listeArticle.libelle}"></td>
-                                        <td th:utext="${listeArticle.prix}"></td>
-                                        <td th:utext="${listeArticle.qtSeuil }"></td>
-                                        <td th:utext="${listeArticle.dateCreation }"></td>
-                                        <td th:utext="${listeArticle.categorie }"></td>
+                                    <tr th:each="listeCategorie : ${listeCategorie}">
+                                        <td th:utext="${listeCategorie.id}"></td>
+                                        <td th:utext="${listeCategorie.designation}"></td>
+
                                         <td>
                                             <button type="button" class="btn btn-success waves-effect waves-light" data-bs-toggle="modal" data-id="1" data-nom="deux" data-prenom="trois" data-bs-target="#exampleModalScrollable"> <i class="mdi mdi-refresh"></i> Modifier</button>
 
@@ -252,36 +229,19 @@
                                                             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                                         </div>
                                                         <div class="modal-body">
-                                                            <form th:object="${user}" th:action="@{/saveUser}" method="POST">
+                                                            <form th:object="${categorie}" th:action="@{/saveCategorie}" method="POST">
                                                                 <div class="mb-3 row">
                                                                     <div class="col-md-10">
                                                                         <input  class="form-control" id="id" type="hidden" >
                                                                     </div>
                                                                 </div>
                                                                 <div class="mb-3 row">
-                                                                    <label for="example-text-input" class="col-md-2 col-form-label">Nom</label>
+                                                                    <label for="example-text-input" class="col-md-2 col-form-label">Designation</label>
                                                                     <div class="col-md-10">
                                                                         <input  class="form-control" id="idnom" type="text" >
                                                                     </div>
                                                                 </div>
-                                                                <div class="mb-3 row">
-                                                                    <label  class="col-md-2 col-form-label">Prenom</label>
-                                                                    <div class="col-md-10">
-                                                                        <input  class="form-control" id="idprenom" type="text" >
-                                                                    </div>
-                                                                </div>
-                                                                <div class="mb-3 row">
-                                                                    <label for="example-text-input" class="col-md-2 col-form-label">Nom</label>
-                                                                    <div class="col-md-10">
-                                                                        <input  class="form-control" id="idemail" type="email" >
-                                                                    </div>
-                                                                </div>
-                                                                <div class="mb-3 row">
-                                                                    <label  class="col-md-2 col-form-label">Prenom</label>
-                                                                    <div class="col-md-10">
-                                                                        <input  class="form-control" id="idpassword" type="password" >
-                                                                    </div>
-                                                                </div>
+
                                                         </div>
                                                         <div class="modal-footer">
                                                             <button type="button" class="btn btn-light" data-bs-dismiss="modal">fermer</button>
@@ -292,7 +252,7 @@
                                                 </div><!-- /.modal-dialog -->
                                             </div><!-- /.modal -->
 
-                                            <a th:href="@{/supprimerArticle/{id}(id=${listeArticle.id})}" class="btn btn-danger"> <i class="mdi mdi-dump"></i> Supprimer</a>
+                                            <a th:href="@{/supprimerCategorie/{id}(id=${listeCategorie.id})}" class="btn btn-danger"> <i class="mdi mdi-dump"></i> Supprimer</a>
                                         </td>
                                     </tr>
                                     </tbody>
@@ -433,12 +393,9 @@
 
 <script src="assets/js/app.js"></script>
 
-<script src="assets/libs/select2/js/select2.min.js"></script>
-<script src="assets/js/pages/form-advanced.init.js"></script>
-
-
 
 </body>
 
 
+<!-- Mirrored from themesbrand.com/skote/layouts/form-elements.html by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 01 Apr 2022 19:17:02 GMT -->
 </html>

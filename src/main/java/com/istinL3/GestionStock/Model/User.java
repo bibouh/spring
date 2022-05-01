@@ -5,10 +5,8 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
+
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
@@ -18,8 +16,12 @@ public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private int id;
-    private String nom;
-    private String prenom;
+    @Column(nullable = false)
+    private String username;
+    @Column(nullable = false)
+    private String firstname;
+    @Column(nullable = false)
     private String email;
-    private  String mdp;
+    @Column(nullable = false)
+    private String password;
 }
