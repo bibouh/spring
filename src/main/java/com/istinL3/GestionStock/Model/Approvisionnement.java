@@ -17,7 +17,9 @@ public class Approvisionnement {
     private int id;
     @OneToOne
     private Article article;
+    @Column(nullable = false)
     private int qt;
+    @Column(nullable = false)
     private LocalDate dateApp;
 
 }
