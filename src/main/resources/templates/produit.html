@@ -292,7 +292,7 @@
                                                 </div><!-- /.modal-dialog -->
                                             </div><!-- /.modal -->
 
-                                            <a th:href="@{/supprimerArticle/{id}(id=${listeArticle.id})}" class="btn btn-danger"> <i class="mdi mdi-dump"></i> Supprimer</a>
+                                            <a onclick="return confirm('etes vous sur de vouloir supprimer ???')" th:href="@{/supprimerArticle/{id}(id=${listeArticle.id})}" class="btn btn-danger"> <i class="mdi mdi-dump"></i> Supprimer</a>
                                         </td>
                                     </tr>
                                     </tbody>
