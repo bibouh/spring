@@ -3,7 +3,7 @@
 <head>
 
     <meta charset="utf-8" />
-    <title>Gestion client</title>
+    <title>Gestion categorie</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta content="Premium Multipurpose Admin & Dashboard Template" name="description" />
     <meta content="Themesbrand" name="author" />
@@ -114,27 +114,40 @@
                         </a>
                     </li>
                     <li>
+                        <a href="/vente" class="waves-effect">
+                            <i class="bx bx-cart"></i>
+                            <span key="t-chat">ventes</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="/recu" class="waves-effect">
+                            <i class="bx bx-receipt"></i>
+                            <span key="t-chat">Recue</span>
+                        </a>
+                    </li>
+
+                    <li>
+                        <a href="javascript: void(0);" class="has-arrow waves-effect">
+                            <i class="bx bxs-package"></i>
+                            <span key="t-crypto">Aricles</span>
+                        </a>
+                        <ul class="sub-menu" aria-expanded="false">
+                            <li><a href="/article" key="t-wallet">produit</a></li>
+                            <li><a href="/approvisionnement" key="t-wallet">Approvisionnement</a></li>
+                            <li><a href="/categorie" key="t-buy">Categorie</a></li>
+                        </ul>
+                    </li>
+                    <li>
                         <a href="/client" class="waves-effect">
-                            <i class="bx bx-person"></i>
+                            <i class="bx bxs-group "></i>
                             <span key="t-chat">Client</span>
                         </a>
                     </li>
+
                     <li>
                         <a href="/utilisateur" class="waves-effect">
                             <i class="bx bx-user"></i>
                             <span key="t-chat">Utilisateur</span>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="/categorie" class="waves-effect">
-                            <i class="bx bx-person"></i>
-                            <span key="t-chat">Categorie</span>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="/article" class="waves-effect">
-                            <i class="bx bx-user"></i>
-                            <span key="t-chat">Articles</span>
                         </a>
                     </li>
 
@@ -157,21 +170,7 @@
             <div class="container-fluid">
 
                 <!-- start page title -->
-                <div class="row">
-                    <div class="col-12">
-                        <div class="page-title-box d-sm-flex align-items-center justify-content-between">
-                            <h4 class="mb-sm-0 font-size-18">Form Elements</h4>
 
-                            <div class="page-title-right">
-                                <ol class="breadcrumb m-0">
-                                    <li class="breadcrumb-item"><a href="javascript: void(0);">Forms</a></li>
-                                    <li class="breadcrumb-item active">Form Elements</li>
-                                </ol>
-                            </div>
-
-                        </div>
-                    </div>
-                </div>
                 <!-- end page title -->
 
                 <div class="row">
@@ -184,7 +183,7 @@
                                     <div class="mb-3 row">
                                         <label for="example-text-input" class="col-md-2 col-form-label">Designation</label>
                                         <div class="col-md-10">
-                                            <input th:field="*{designation}" class="form-control" type="text" id="example-text-input">
+                                            <input th:field="*{designation}" class="form-control" type="text" id="example-text-input" required>
                                         </div>
                                     </div>
                                     <button class="btn btn-lg btn-success" type="submit">Enregistrer</button>
@@ -218,7 +217,7 @@
                                         <td th:utext="${listeCategorie.designation}"></td>
 
                                         <td>
-                                            <button type="button" class="btn btn-success waves-effect waves-light" data-bs-toggle="modal" data-id="1" data-nom="deux" data-prenom="trois" data-bs-target="#exampleModalScrollable"> <i class="mdi mdi-refresh"></i> Modifier</button>
+                                            <button type="button" class="btn btn-success waves-effect waves-light" data-bs-toggle="modal" data-id="[[${listeCategorie.id}]]" data-nom="[[${listeCategorie.designation}]]" data-bs-target="#exampleModalScrollable"> <i class="mdi mdi-refresh"></i> Modifier</button>
 
                                             <!-- Scrollable modal -->
                                             <div class="modal fade" id="exampleModalScrollable" tabindex="-1" role="dialog" aria-labelledby="exampleModalScrollableTitle" aria-hidden="true">
@@ -238,7 +237,7 @@
                                                                 <div class="mb-3 row">
                                                                     <label for="example-text-input" class="col-md-2 col-form-label">Designation</label>
                                                                     <div class="col-md-10">
-                                                                        <input  class="form-control" id="idnom" type="text" >
+                                                                        <input  class="form-control" id="nom" type="text" >
                                                                     </div>
                                                                 </div>
 
@@ -289,75 +288,17 @@
 </div>
 <!-- END layout-wrapper -->
 
-<!-- Right Sidebar -->
-<div class="right-bar">
-    <div data-simplebar class="h-100">
-        <div class="rightbar-title d-flex align-items-center px-3 py-4">
-
-            <h5 class="m-0 me-2">Settings</h5>
-
-            <a href="javascript:void(0);" class="right-bar-toggle ms-auto">
-                <i class="mdi mdi-close noti-icon"></i>
-            </a>
-        </div>
-
-        <!-- Settings -->
-        <hr class="mt-0" />
-        <h6 class="text-center mb-0">Choose Layouts</h6>
-
-        <div class="p-4">
-            <div class="mb-2">
-                <img src="assets/images/layouts/layout-1.jpg" class="img-thumbnail" alt="layout images">
-            </div>
-
-            <div class="form-check form-switch mb-3">
-                <input class="form-check-input theme-choice" type="checkbox" id="light-mode-switch" checked>
-                <label class="form-check-label" for="light-mode-switch">Light Mode</label>
-            </div>
-
-            <div class="mb-2">
-                <img src="assets/images/layouts/layout-2.jpg" class="img-thumbnail" alt="layout images">
-            </div>
-            <div class="form-check form-switch mb-3">
-                <input class="form-check-input theme-choice" type="checkbox" id="dark-mode-switch">
-                <label class="form-check-label" for="dark-mode-switch">Dark Mode</label>
-            </div>
-
-            <div class="mb-2">
-                <img src="assets/images/layouts/layout-3.jpg" class="img-thumbnail" alt="layout images">
-            </div>
-            <div class="form-check form-switch mb-3">
-                <input class="form-check-input theme-choice" type="checkbox" id="rtl-mode-switch">
-                <label class="form-check-label" for="rtl-mode-switch">RTL Mode</label>
-            </div>
-
-            <div class="mb-2">
-                <img src="assets/images/layouts/layout-4.jpg" class="img-thumbnail" alt="layout images">
-            </div>
-            <div class="form-check form-switch mb-5">
-                <input class="form-check-input theme-choice" type="checkbox" id="dark-rtl-mode-switch">
-                <label class="form-check-label" for="dark-rtl-mode-switch">Dark RTL Mode</label>
-            </div>
-
-
-        </div>
-
-    </div> <!-- end slimscroll-menu-->
-</div>
-<!-- /Right-bar -->
 
 
 
-<script>
+<script th:inline="javascript">
         $("#exampleModalScrollable").on('show.bs.modal', function(event) {
             var button = $(event.relatedTarget)
             var id = button.data('id')
             var nom = button.data('nom')
-            var prenom = button.data('prenom')
             var modal = $(this)
-            modal.find('.modal-body #idcl').val(id)
-            modal.find('.modal-body #idnom').val(nom)
-            modal.find('.modal-body #idprenom').val(prenom)
+            modal.find('.modal-body #id').val(id)
+            modal.find('.modal-body #nom').val(nom)
         })
     </script>
 

@@ -112,29 +112,44 @@
                         </a>
                     </li>
                     <li>
+                        <a href="/vente" class="waves-effect">
+                            <i class="bx bx-cart"></i>
+                            <span key="t-chat">ventes</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="/recu" class="waves-effect">
+                            <i class="bx bx-receipt"></i>
+                            <span key="t-chat">Recue</span>
+                        </a>
+                    </li>
+
+                    <li>
+                        <a href="javascript: void(0);" class="has-arrow waves-effect">
+                            <i class="bx bxs-package"></i>
+                            <span key="t-crypto">Aricles</span>
+                        </a>
+                        <ul class="sub-menu" aria-expanded="false">
+                            <li><a href="/article" key="t-wallet">produit</a></li>
+                            <li><a href="/approvisionnement" key="t-wallet">Approvisionnement</a></li>
+                            <li><a href="/categorie" key="t-buy">Categorie</a></li>
+                        </ul>
+                    </li>
+                    <li>
                         <a href="/client" class="waves-effect">
                             <i class="bx bxs-group "></i>
                             <span key="t-chat">Client</span>
                         </a>
                     </li>
+
                     <li>
                         <a href="/utilisateur" class="waves-effect">
                             <i class="bx bx-user"></i>
                             <span key="t-chat">Utilisateur</span>
                         </a>
                     </li>
-                    <li>
-                        <a href="/categorie" class="waves-effect">
-                            <i class="bx bxs-purchase-tag-alt "></i>
-                            <span key="t-chat">Categorie</span>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="/article" class="waves-effect">
-                            <i class="bx bxs-package"></i>
-                            <span key="t-chat">Articles</span>
-                        </a>
-                    </li>
+
+
                 </ul>
             </div>
             <!-- Sidebar -->
@@ -149,47 +164,35 @@
             <div class="container-fluid">
 
                 <!-- start page title -->
-                <div class="row">
-                    <div class="col-12">
-                        <div class="page-title-box d-sm-flex align-items-center justify-content-between">
-                            <h4 class="mb-sm-0 font-size-18">Form Elements</h4>
 
-                            <div class="page-title-right">
-                                <ol class="breadcrumb m-0">
-                                    <li class="breadcrumb-item"><a href="javascript: void(0);">Forms</a></li>
-                                    <li class="breadcrumb-item active">Form Elements</li>
-                                </ol>
-                            </div>
-
-                        </div>
-                    </div>
-                </div>
                 <!-- end page title -->
 
                 <div class="row">
                     <div class="col-12">
                         <div class="card">
                             <div class="card-body">
-
+                                <div th:if="${message}" class="alert alert-success text-center" >
+                                    [[${message}]]
+                                </div>
                                 <h4 class="card-title">Enregister un article</h4>
                                 <form  th:object="${article}" th:action="@{/saveArticle}" method="POST" >
                                     <div class="mb-3 row">
                                         <label for="example-text-input" class="col-md-2 col-form-label">Libelle</label>
                                         <div class="col-md-10">
-                                            <input th:field="*{libelle}" class="form-control" type="text" id="example-text-input">
+                                            <input th:field="*{libelle}" class="form-control" type="text" id="example-text-input" required>
                                         </div>
                                     </div>
                                     <div class="mb-3 row">
                                         <label  class="col-md-2 col-form-label">Prix</label>
                                         <div class="col-md-10">
-                                            <input th:field="*{prix}" class="form-control" type="number" >
+                                            <input th:field="*{prix}" class="form-control" type="number" required>
                                         </div>
                                     </div>
 
                                     <div class="mb-3 row">
                                         <label  class="col-md-2 col-form-label">Quantite seuil</label>
                                         <div class="col-md-10">
-                                            <input th:field="*{qtSeuil}" class="form-control" type="number" >
+                                            <input th:field="*{qtSeuil}" class="form-control" type="number" required>
                                         </div>
                                     </div>
 
@@ -198,7 +201,9 @@
                                         <label  class="col-md-2 col-form-label">Categorie</label>
                                         <div class="col-md-10">
                                             <select class="form-control select2" th:field="*{categorie}" >
-                                                <option th:each="listeCategorie : ${listeCategorie}" th:value="${listeCategorie.id}" th:text="${listeCategorie.	designation }"> selectionner une categorie</option>
+                                                <option th:each="listeCategorie : ${listeCategorie}"
+                                                        th:value="${listeCategorie.id}"
+                                                        th:text="${listeCategorie.	designation }"> selectionner une categorie</option>
                                             </select>
                                         </div>
                                     </div>
@@ -219,6 +224,7 @@
                     <div class="col-lg-12">
                         <div class="card">
                             <div class="card-body">
+
                                 <h4 class="card-title mb-4">Liste des articles</h4>
                                 <table id="datatable-buttons" class="table table-bordered dt-responsive nowrap w-100">
                                     <thead>
@@ -227,6 +233,7 @@
                                         <th>Libelle</th>
                                         <th>Prix</th>
                                         <th>Quantite seuil</th>
+                                        <th>Quantite en stock</th>
                                         <th>Date de creation</th>
                                         <th>Categorie</th>
                                         <th>Action</th>
@@ -238,8 +245,9 @@
                                         <td th:utext="${listeArticle.libelle}"></td>
                                         <td th:utext="${listeArticle.prix}"></td>
                                         <td th:utext="${listeArticle.qtSeuil }"></td>
+                                        <td th:utext="${listeArticle.stocks }"></td>
                                         <td th:utext="${listeArticle.dateCreation }"></td>
-                                        <td th:utext="${listeArticle.categorie }"></td>
+                                        <td th:utext="${listeArticle.categorie.designation }"></td>
                                         <td>
                                             <button type="button" class="btn btn-success waves-effect waves-light" data-bs-toggle="modal" data-id="1" data-nom="deux" data-prenom="trois" data-bs-target="#exampleModalScrollable"> <i class="mdi mdi-refresh"></i> Modifier</button>
 
@@ -307,7 +315,36 @@
             </div> <!-- container-fluid -->
         </div>
         <!-- End Page-content -->
+        <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalScrollableTitle" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-scrollable">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalTitle">Faire une vente</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="mb-3 row">
+                            <label  class="col-md-2 col-form-label">Client</label>
+                            <div class="col-md-10">
+                                <form action="" method="post"></form>
+                                <select class="form-control select2" th:field="*{field}">
+                                    <option th:each="listeClient : ${listeClient}"
+                                            th:value="${listeClient.id}"
+                                            th:text="${listeClient.nom }">
+                                        selectionner un client</option>
+                                </select>
 
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-light" data-bs-dismiss="modal">fermer</button>
+                        <a href="#" type="submit" class="btn btn-primary">Vendre</a>
+                        </form>
+                    </div>
+                </div><!-- /.modal-content -->
+            </div><!-- /.modal-dialog -->
+        </div>
 
         <footer class="footer">
             <div class="container-fluid">
@@ -388,18 +425,7 @@
 
 
 
-<script>
-        $("#exampleModalScrollable").on('show.bs.modal', function(event) {
-            var button = $(event.relatedTarget)
-            var id = button.data('id')
-            var nom = button.data('nom')
-            var prenom = button.data('prenom')
-            var modal = $(this)
-            modal.find('.modal-body #idcl').val(id)
-            modal.find('.modal-body #idnom').val(nom)
-            modal.find('.modal-body #idprenom').val(prenom)
-        })
-    </script>
+
 
 <!-- Right bar overlay-->
 <div class="rightbar-overlay"></div>
@@ -430,13 +456,13 @@
 
 <!-- Datatable init js -->
 <script src="assets/js/pages/datatables.init.js"></script>
-
 <script src="assets/js/app.js"></script>
 
 <script src="assets/libs/select2/js/select2.min.js"></script>
 <script src="assets/js/pages/form-advanced.init.js"></script>
 
-
+<!-- App js -->
+<script src="assets/js/app.js"></script>
 
 </body>
 

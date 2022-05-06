@@ -2,6 +2,7 @@ package com.istinL3.GestionStock.Controller;
 
 
 import com.istinL3.GestionStock.Model.User;
+import com.istinL3.GestionStock.Repository.ArticleRepo;
 import com.istinL3.GestionStock.Services.MyUserDetailService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -16,14 +17,18 @@ public class LoginController {
 
     private MyUserDetailService myUserDetailService;
 
-
+    @Autowired
+    private ArticleRepo articleRepo;
     @GetMapping("/login")
     public String loginpage(){
         return "auth-login";
     }
 
     @GetMapping("/")
-    public String indexpage(){
+    public String indexpage(Model model){
+        model.addAttribute("revenu",articleRepo.getvendue());
+        model.addAttribute("ruine",articleRepo.getruine());
+        model.addAttribute("stock",articleRepo.getstock());
         return "index";
     }
 

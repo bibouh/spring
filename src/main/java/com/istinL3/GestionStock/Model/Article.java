@@ -21,7 +21,10 @@ public class Article {
     private int prix;
     @Column(nullable = false)
     private int qtSeuil;
+    @Column(nullable = true)
+    private int stocks;
     private LocalDate dateCreation;
+
     @OneToOne
     private Categorie categorie;
 }

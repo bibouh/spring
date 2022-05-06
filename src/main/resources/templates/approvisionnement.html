@@ -3,7 +3,7 @@
 <head>
 
         <meta charset="utf-8" />
-        <title>Gestion client</title>
+        <title>Gestion approvisionnement</title>
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <meta content="Premium Multipurpose Admin & Dashboard Template" name="description" />
         <meta content="Themesbrand" name="author" />
@@ -22,6 +22,7 @@
 
     <!-- Responsive datatable examples -->
     <link href="assets/libs/datatables.net-responsive-bs4/css/responsive.bootstrap4.min.css" rel="stylesheet" type="text/css" />
+    <link href="assets/libs/select2/css/select2.min.css" rel="stylesheet" type="text/css" />
 
 
 </head>
@@ -96,6 +97,7 @@
             </header>
 
             <!-- ========== Left Sidebar Start ========== -->
+            <!-- ========== Left Sidebar Start ========== -->
             <div class="vertical-menu">
 
                 <div data-simplebar class="h-100">
@@ -119,12 +121,14 @@
                                     <span key="t-chat">ventes</span>
                                 </a>
                             </li>
+
                             <li>
                                 <a href="/recu" class="waves-effect">
                                     <i class="bx bx-receipt"></i>
                                     <span key="t-chat">Recue</span>
                                 </a>
                             </li>
+
                             <li>
                                 <a href="javascript: void(0);" class="has-arrow waves-effect">
                                     <i class="bx bxs-package"></i>
@@ -177,18 +181,24 @@
                                 <div class="card">
                                     <div class="card-body">
 
-                                        <h4 class="card-title">Enregister un client</h4>
-                                        <form  th:object="${client}" th:action="@{/saveClient}" method="POST" >
+                                        <h4 class="card-title">Enregister un approvisionnement</h4>
+                                        <form  th:object="${approvisionnement}" th:action="@{/saveApprovisionnement}" method="POST" >
+
                                             <div class="mb-3 row">
-                                                <label for="example-text-input" class="col-md-2 col-form-label">Nom</label>
+                                                <label  class="col-md-2 col-form-label">Article</label>
                                                 <div class="col-md-10">
-                                                    <input th:field="*{nom}" class="form-control" type="text" id="example-text-input" required>
+                                                    <select class="form-control select2" th:field="*{article}" required>
+                                                        <option th:each="listeArticle : ${listeArticle}"
+                                                                th:value="${listeArticle.id}"
+                                                                th:text="${listeArticle.	libelle }">
+                                                            selectionner un article</option>
+                                                    </select>
                                                 </div>
                                             </div>
                                             <div class="mb-3 row">
-                                                <label for="example-search-input" class="col-md-2 col-form-label">Prenom</label>
+                                                <label for="example-text-input" class="col-md-2 col-form-label">Quantite</label>
                                                 <div class="col-md-10">
-                                                    <input th:field="*{prenom}" class="form-control" type="text" id="example-search-input" required>
+                                                    <input th:field="*{qt}" class="form-control" type="number" id="example-text-input" required>
                                                 </div>
                                             </div>
                                             <button class="btn btn-lg btn-success" type="submit">Enregistrer</button>
@@ -207,21 +217,23 @@
                             <div class="col-lg-12">
                                 <div class="card">
                                     <div class="card-body">
-                                        <h4 class="card-title mb-4">Liste des clients</h4>
+                                        <h4 class="card-title mb-4">Liste des approvisionnements</h4>
                                         <table id="datatable-buttons" class="table table-bordered dt-responsive nowrap w-100">
                                             <thead>
                                             <tr>
                                                 <th>Id</th>
-                                                <th>Nom</th>
-                                                <th>Prenom</th>
+                                                <th>Article</th>
+                                                <th>Quantite</th>
+                                                <th>Date de l'approvisionnement</th>
                                                 <th>Action</th>
                                             </tr>
                                             </thead>
                                             <tbody>
-                                            <tr th:each="listeClient : ${listeClient}">
-                                                <td th:utext="${listeClient.id}"></td>
-                                                <td th:utext="${listeClient.nom}"></td>
-                                                <td th:utext="${listeClient.prenom}"></td>
+                                            <tr th:each="listeApprovisionnement : ${listeApprovisionnement}">
+                                                <td th:utext="${listeApprovisionnement.id}"></td>
+                                                <td th:utext="${listeApprovisionnement.article.libelle}"></td>
+                                                <td th:utext="${listeApprovisionnement.qt}"></td>
+                                                <td th:utext="${listeApprovisionnement.dateApp}"></td>
                                                 <td>
                                                     <button type="button" class="btn btn-success waves-effect waves-light" data-bs-toggle="modal" data-id="1" data-nom="deux" data-prenom="trois" data-bs-target="#exampleModalScrollable"> <i class="mdi mdi-refresh"></i> Modifier</button>
 
@@ -234,7 +246,7 @@
                                                                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                                                 </div>
                                                                 <div class="modal-body">
-                                                                    <form th:object="${client}" th:action="@{/saveClient}" method="POST">
+                                                                    <form th:object="${approvisionnement}" th:action="@{/saveApprovisionnement}" method="POST">
                                                                     <div class="mb-3 row">
                                                                         <div class="col-md-10">
                                                                             <input  class="form-control" id="id" type="hidden" >
@@ -262,7 +274,7 @@
                                                         </div><!-- /.modal-dialog -->
                                                     </div><!-- /.modal -->
 
-                                                    <a th:href="@{/supprimerClient/{id}(id=${listeClient.id})}" class="btn btn-danger"> <i class="mdi mdi-dump"></i> Supprimer</a>
+                                                    <a th:href="@{/supprimerApprovisionnement/{id}(id=${listeApprovisionnement.id})}" class="btn btn-danger"> <i class="bx bx-trash-alt"></i> Supprimer</a>
                                                 </td>
                                             </tr>
                                             </tbody>
@@ -400,12 +412,11 @@
 
     <!-- Datatable init js -->
     <script src="assets/js/pages/datatables.init.js"></script>
-
+    <script src="assets/libs/select2/js/select2.min.js"></script>
+    <script src="assets/js/pages/form-advanced.init.js"></script>
     <script src="assets/js/app.js"></script>
 
 
     </body>
 
-
-<!-- Mirrored from themesbrand.com/skote/layouts/form-elements.html by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 01 Apr 2022 19:17:02 GMT -->
 </html>

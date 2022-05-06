@@ -3,12 +3,13 @@
 <head>
 
         <meta charset="utf-8" />
-        <title>Gestion client</title>
+        <title>Gestion vente</title>
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <meta content="Premium Multipurpose Admin & Dashboard Template" name="description" />
         <meta content="Themesbrand" name="author" />
         <!-- App favicon -->
         <link rel="shortcut icon" href="assets/images/favicon.ico">
+    <link href="assets/libs/select2/css/select2.min.css" rel="stylesheet" type="text/css" />
 
         <!-- Bootstrap Css -->
         <link href="assets/css/bootstrap.min.css" id="bootstrap-style" rel="stylesheet" type="text/css" />
@@ -32,8 +33,6 @@
 
         <!-- Begin page -->
         <div id="layout-wrapper">
-
-            
             <header id="page-topbar">
                 <div class="navbar-header">
                     <div class="d-flex">
@@ -57,17 +56,13 @@
                                 </span>
                             </a>
                         </div>
-
                         <button type="button" class="btn btn-sm px-3 font-size-16 header-item waves-effect" id="vertical-menu-btn">
                             <i class="fa fa-fw fa-bars"></i>
                         </button>
 
-
-
                     </div>
 
                     <div class="d-flex">
-
                         <div class="dropdown d-inline-block d-lg-none ms-2">
                             <button type="button" class="btn header-item noti-icon waves-effect" id="page-header-search-dropdown"
                             data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -75,7 +70,6 @@
                             </button>
                             <div class="dropdown-menu dropdown-menu-lg dropdown-menu-end p-0"
                                 aria-labelledby="page-header-search-dropdown">
-        
 
                             </div>
                         </div>
@@ -156,13 +150,8 @@
                     <!-- Sidebar -->
                 </div>
             </div>
-            <!-- Left Sidebar End -->
 
 
-
-            <!-- ============================================================== -->
-            <!-- Start right Content here -->
-            <!-- ============================================================== -->
             <div class="main-content">
 
                 <div class="page-content">
@@ -177,18 +166,46 @@
                                 <div class="card">
                                     <div class="card-body">
 
-                                        <h4 class="card-title">Enregister un client</h4>
-                                        <form  th:object="${client}" th:action="@{/saveClient}" method="POST" >
+                                        <h4 class="card-title">Enregister une vente</h4>
+                                        <form  th:object="${vente}" th:action="@{/saveVente}" method="POST" >
+
                                             <div class="mb-3 row">
-                                                <label for="example-text-input" class="col-md-2 col-form-label">Nom</label>
+                                                <label  class="col-md-2 col-form-label">numero facture</label>
                                                 <div class="col-md-10">
-                                                    <input th:field="*{nom}" class="form-control" type="text" id="example-text-input" required>
+                                                    <input class="form-control" type="text" th:utext="${rnd}" th:field="*{numero}" required>
                                                 </div>
                                             </div>
+
+
                                             <div class="mb-3 row">
-                                                <label for="example-search-input" class="col-md-2 col-form-label">Prenom</label>
+                                                <label  class="col-md-2 col-form-label">Client</label>
                                                 <div class="col-md-10">
-                                                    <input th:field="*{prenom}" class="form-control" type="text" id="example-search-input" required>
+                                                    <select class="form-control select2" th:field="*{client}" required >
+                                                        <option th:each="listeClient : ${listeClient}"
+                                                                th:value="${listeClient.id}"
+                                                                th:text="${listeClient.	nom }">
+                                                            selectionner un client</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+
+
+                                            <div class="mb-3 row">
+                                                <label  class="col-md-2 col-form-label">Article</label>
+                                                <div class="col-md-10">
+                                                    <select class="form-control select2" th:field="*{article}" required >
+                                                        <option th:each="listeArticle : ${listeArticle}"
+                                                                th:value="${listeArticle.id}"
+                                                                th:text="${listeArticle.libelle }">
+                                                            selectionner un article</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+
+                                            <div class="mb-3 row">
+                                                <label for="example-text-input" class="col-md-2 col-form-label">Quantite vendue</label>
+                                                <div class="col-md-10">
+                                                    <input th:field="*{qtVendue}" class="form-control" type="number" id="example-text-input" required>
                                                 </div>
                                             </div>
                                             <button class="btn btn-lg btn-success" type="submit">Enregistrer</button>
@@ -211,58 +228,24 @@
                                         <table id="datatable-buttons" class="table table-bordered dt-responsive nowrap w-100">
                                             <thead>
                                             <tr>
-                                                <th>Id</th>
-                                                <th>Nom</th>
-                                                <th>Prenom</th>
+                                                <th>numero</th>
+                                                <th>Nom de l'article</th>
+                                                <th>Nom du client</th>
+                                                <th>Quantite vendue</th>
+                                                <th>Date de vente</th>
                                                 <th>Action</th>
                                             </tr>
                                             </thead>
                                             <tbody>
-                                            <tr th:each="listeClient : ${listeClient}">
-                                                <td th:utext="${listeClient.id}"></td>
-                                                <td th:utext="${listeClient.nom}"></td>
-                                                <td th:utext="${listeClient.prenom}"></td>
+                                            <tr th:each="listeVente : ${listeVente}">
+                                                <td th:utext="${listeVente.numero}"></td>
+                                                <td th:utext="${listeVente.article.libelle}"></td>
+                                                <td th:utext="${listeVente.client.nom}"></td>
+                                                <td th:utext="${listeVente.qtVendue}"></td>
+                                                <td th:utext="${listeVente.dateDeVente}"></td>
                                                 <td>
-                                                    <button type="button" class="btn btn-success waves-effect waves-light" data-bs-toggle="modal" data-id="1" data-nom="deux" data-prenom="trois" data-bs-target="#exampleModalScrollable"> <i class="mdi mdi-refresh"></i> Modifier</button>
 
-                                                    <!-- Scrollable modal -->
-                                                    <div class="modal fade" id="exampleModalScrollable" tabindex="-1" role="dialog" aria-labelledby="exampleModalScrollableTitle" aria-hidden="true">
-                                                        <div class="modal-dialog modal-dialog-scrollable">
-                                                            <div class="modal-content">
-                                                                <div class="modal-header">
-                                                                    <h5 class="modal-title" id="exampleModalScrollableTitle">Modifier un client</h5>
-                                                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                                                                </div>
-                                                                <div class="modal-body">
-                                                                    <form th:object="${client}" th:action="@{/saveClient}" method="POST">
-                                                                    <div class="mb-3 row">
-                                                                        <div class="col-md-10">
-                                                                            <input  class="form-control" id="id" type="hidden" >
-                                                                        </div>
-                                                                    </div>
-                                                                    <div class="mb-3 row">
-                                                                        <label for="example-text-input" class="col-md-2 col-form-label">Nom</label>
-                                                                        <div class="col-md-10">
-                                                                            <input  class="form-control" id="idnom" type="text" >
-                                                                        </div>
-                                                                    </div>
-                                                                    <div class="mb-3 row">
-                                                                        <label for="example-search-input" class="col-md-2 col-form-label">Prenom</label>
-                                                                        <div class="col-md-10">
-                                                                            <input  class="form-control" id="idprenom" type="text" >
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                                <div class="modal-footer">
-                                                                    <button type="button" class="btn btn-light" data-bs-dismiss="modal">fermer</button>
-                                                                    <button type="submit" class="btn btn-primary">Modifier</button>
-                                                                    </form>
-                                                                </div>
-                                                            </div><!-- /.modal-content -->
-                                                        </div><!-- /.modal-dialog -->
-                                                    </div><!-- /.modal -->
-
-                                                    <a th:href="@{/supprimerClient/{id}(id=${listeClient.id})}" class="btn btn-danger"> <i class="mdi mdi-dump"></i> Supprimer</a>
+                                                    <a th:href="@{/supprimerVente/{id}(id=${listeVente.id})}" class="btn btn-danger"> <i class="mdi mdi-dump"></i> Supprimer</a>
                                                 </td>
                                             </tr>
                                             </tbody>
@@ -400,12 +383,11 @@
 
     <!-- Datatable init js -->
     <script src="assets/js/pages/datatables.init.js"></script>
-
+    <script src="assets/libs/select2/js/select2.min.js"></script>
+    <script src="assets/js/pages/form-advanced.init.js"></script>
     <script src="assets/js/app.js"></script>
-
 
     </body>
 
 
-<!-- Mirrored from themesbrand.com/skote/layouts/form-elements.html by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 01 Apr 2022 19:17:02 GMT -->
 </html>

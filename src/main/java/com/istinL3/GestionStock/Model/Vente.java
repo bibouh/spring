@@ -16,6 +16,8 @@ public class Vente {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private int id;
+    @Column(nullable = false)
+    private int numero;
     @OneToOne
     private Article article;
     @Column(nullable = false)
