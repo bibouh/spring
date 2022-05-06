@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.time.LocalDate;
 
@@ -31,17 +32,19 @@ public class ApprovisionnementController {
         return "approvisionnement";
     }
     @PostMapping("/saveApprovisionnement")
-    public String saveapprovisionnement(@ModelAttribute("approvisionnement") Approvisionnement approvisionnement , Article article){
+    public String saveapprovisionnement(@ModelAttribute("approvisionnement") Approvisionnement approvisionnement , Article article, RedirectAttributes ra){
         approvisionnement.setDateApp(LocalDate.now());
         approvisionnementService.saveapprovisionnement(approvisionnement);
         article.setId( approvisionnement.getArticle().getId());
         article.setStocks(article.getStocks()+approvisionnement.getQt());
+        ra.addFlashAttribute("message","approvisionnement ajoute avec succes");
         articleService.savearticle(article);
 
         return "redirect:/approvisionnement";
     }
     @GetMapping("/supprimerApprovisionnement/{id}")
-    public String supprimerapprovisionnement(@PathVariable(value = "id") int id){
+    public String supprimerapprovisionnement(@PathVariable(value = "id") int id,RedirectAttributes ra){
+        ra.addFlashAttribute("message","approvisionnement supprime avec succes");
         this.approvisionnementService.deleteApprovisionnement(id);
         return "redirect:/approvisionnement";
     }

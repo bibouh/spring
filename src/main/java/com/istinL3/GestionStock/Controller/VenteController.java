@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.time.LocalDate;
 import java.util.Random;
@@ -41,17 +42,19 @@ public class VenteController {
         return "vente";
     }
     @PostMapping("/saveVente")
-    public String savevente(@ModelAttribute("vente") Vente vente , Article article){
+    public String savevente(@ModelAttribute("vente") Vente vente , Article article, RedirectAttributes ra){
         vente.setDateDeVente(LocalDate.now());
         if (article.getStocks() < vente.getQtVendue()){
             return "redirect:/approvisionnement";
         }
         article.setStocks(article.getStocks()-vente.getQtVendue());
+        ra.addFlashAttribute("message","vente ajoute avec succes");
         venteService.savevente(vente);
         return "redirect:/vente";
     }
     @GetMapping("/supprimerVente/{id}")
-    public String supprimervente(@PathVariable(value = "id") int id , Article article , Vente vente){
+    public String supprimervente(@PathVariable(value = "id") int id , Article article , Vente vente,RedirectAttributes ra){
+        ra.addFlashAttribute("message","vente supprime avec succes");
         this.venteService.deleteVente(id);
 //        article.setId(vente.getArticle().getId());
 //        article.setStocks(article.getStocks()+vente.getQtVendue());

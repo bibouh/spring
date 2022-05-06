@@ -25,4 +25,13 @@ public class User {
     @Column(nullable = false)
     private String password;
 
+    public User(String username, String firstname, String email, String password) {
+
+        this.username = username;
+        this.firstname = firstname;
+        this.email = email;
+        this.password = password;
+    }
+
+
 }

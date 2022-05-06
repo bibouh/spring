@@ -128,7 +128,7 @@
                             <li>
                                 <a href="javascript: void(0);" class="has-arrow waves-effect">
                                     <i class="bx bxs-package"></i>
-                                    <span key="t-crypto">Aricles</span>
+                                    <span key="t-crypto">Articles</span>
                                 </a>
                                 <ul class="sub-menu" aria-expanded="false">
                                     <li><a href="/article" key="t-wallet">produit</a></li>
@@ -176,7 +176,9 @@
                             <div class="col-12">
                                 <div class="card">
                                     <div class="card-body">
-
+                                        <div th:if="${message}" class="alert alert-success text-center" >
+                                            [[${message}]]
+                                        </div>
                                         <h4 class="card-title">Enregister un client</h4>
                                         <form  th:object="${client}" th:action="@{/saveClient}" method="POST" >
                                             <div class="mb-3 row">
@@ -262,7 +264,7 @@
                                                         </div><!-- /.modal-dialog -->
                                                     </div><!-- /.modal -->
 
-                                                    <a th:href="@{/supprimerClient/{id}(id=${listeClient.id})}" class="btn btn-danger"> <i class="mdi mdi-dump"></i> Supprimer</a>
+                                                    <a onclick="return confirm('etes vous sur de vouloir supprimer ???')" th:href="@{/supprimerClient/{id}(id=${listeClient.id})}" class="btn btn-danger"> <i class="mdi mdi-dump"></i> Supprimer</a>
                                                 </td>
                                             </tr>
                                             </tbody>

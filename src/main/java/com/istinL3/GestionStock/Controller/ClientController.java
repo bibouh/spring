@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 @Controller
 
@@ -26,12 +27,14 @@ public class ClientController {
     }
 
     @PostMapping("/saveClient")
-    public String saveclient(@ModelAttribute("client") Client client){
+    public String saveclient(@ModelAttribute("client") Client client, RedirectAttributes ra){
+        ra.addFlashAttribute("message","client ajoute avec succes");
         clientService.saveclient(client);
         return "redirect:/client";
     }
     @GetMapping("/supprimerClient/{id}")
-    public String supprimerclient(@PathVariable(value = "id") int id){
+    public String supprimerclient(@PathVariable(value = "id") int id,RedirectAttributes ra){
+        ra.addFlashAttribute("message","client supprime avec succes");
         this.clientService.deleteClient(id);
         return "redirect:/client";
     }

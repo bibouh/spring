@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 @Controller
 public class UserController {
@@ -23,14 +24,16 @@ public class UserController {
     }
 
     @PostMapping("/saveUser")
-    public String saveuser(@ModelAttribute("client") User user){
+    public String saveuser(@ModelAttribute("client") User user,RedirectAttributes ra){
         BCryptPasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder();
         user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
+        ra.addFlashAttribute("message","utilisateur ajoute avec succes");
         userService.saveuser(user);
         return "redirect:/utilisateur";
     }
     @GetMapping("/supprimerUser/{id}")
-    public String supprimeruser(@PathVariable(value = "id") int id){
+    public String supprimeruser(@PathVariable(value = "id") int id, RedirectAttributes ra){
+        ra.addFlashAttribute("message","utilisateur supprime avec succes");
         this.userService.deleteUser(id);
         return "redirect:/utilisateur";
     }

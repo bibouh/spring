@@ -132,7 +132,7 @@
                             <li>
                                 <a href="javascript: void(0);" class="has-arrow waves-effect">
                                     <i class="bx bxs-package"></i>
-                                    <span key="t-crypto">Aricles</span>
+                                    <span key="t-crypto">Articles</span>
                                 </a>
                                 <ul class="sub-menu" aria-expanded="false">
                                     <li><a href="/article" key="t-wallet">produit</a></li>
@@ -180,7 +180,9 @@
                             <div class="col-12">
                                 <div class="card">
                                     <div class="card-body">
-
+                                        <div th:if="${message}" class="alert alert-success text-center" >
+                                            [[${message}]]
+                                        </div>
                                         <h4 class="card-title">Enregister un approvisionnement</h4>
                                         <form  th:object="${approvisionnement}" th:action="@{/saveApprovisionnement}" method="POST" >
 
@@ -274,7 +276,7 @@
                                                         </div><!-- /.modal-dialog -->
                                                     </div><!-- /.modal -->
 
-                                                    <a th:href="@{/supprimerApprovisionnement/{id}(id=${listeApprovisionnement.id})}" class="btn btn-danger"> <i class="bx bx-trash-alt"></i> Supprimer</a>
+                                                    <a  onclick="return confirm('etes vous sur de vouloir supprimer ???')" th:href="@{/supprimerApprovisionnement/{id}(id=${listeApprovisionnement.id})}" class="btn btn-danger"> <i class="bx bx-trash-alt"></i> Supprimer</a>
                                                 </td>
                                             </tr>
                                             </tbody>

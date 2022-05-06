@@ -41,12 +41,13 @@ public class ProduitController {
     public String savearticle(@ModelAttribute("article") Article article , RedirectAttributes ra){
         article.setDateCreation(LocalDate.now());
         articleService.savearticle(article);
-        ra.addFlashAttribute("message","produit ajouter avec succes");
+        ra.addFlashAttribute("message","produit ajoute avec succes");
         return "redirect:/article";
     }
 
     @GetMapping("/supprimerArticle/{id}")
-    public String supprimerarticle(@PathVariable(value = "id") int id){
+    public String supprimerarticle(@PathVariable(value = "id") int id,RedirectAttributes ra){
+        ra.addFlashAttribute("message","produit supprime avec succes");
         this.articleService.deleteArticle(id);
         return "redirect:/article";
     }
